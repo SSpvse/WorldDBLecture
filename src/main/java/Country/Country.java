@@ -1,32 +1,28 @@
 package Country;
 
-public class City {
-
+public class Country {
     int id;
-    String countryName;
     String name;
     int population;
 
-
-    public City(){
+    public Country(){
     }
 
     @Override
     public String toString() {
-        return "City{" +
+        return "Country{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", population=" + population +
-                ", Country name=" + countryName +
                 '}';
     }
 
-    public City(String name, int population) {
+    public Country(String name, int population) {
         this.name = name;
         this.population = population;
     }
 
-    public City(int id, String name, int population) {
+    public Country(int id, String name, int population) {
         this.id = id;
         this.name = name;
         this.population = population;
@@ -55,12 +51,5 @@ public class City {
     }
     public void setPopulation(int population){
         this.population = population;
-    }
-    public String getCountryName() {
-        return countryName;
-    }
-
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
     }
 }
