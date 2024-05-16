@@ -1,6 +1,7 @@
 import Country.*;
 import db.WorldService;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -12,11 +13,15 @@ public class Menu {
 
     WorldService worldService = new WorldService();
 
+    myFileReader fileReader;
+
     // array lists for temporary lists that we use throughout menu
     ArrayList<Country> countryList = new ArrayList<Country>();
     ArrayList<City> cityList = new ArrayList<City>();
-    public Menu() throws SQLException {
 
+
+    public Menu() throws SQLException, FileNotFoundException {
+        fileReader = new myFileReader(worldService);
     }
 
     public void runMenu() throws SQLException {
