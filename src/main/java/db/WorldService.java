@@ -37,9 +37,9 @@ public class WorldService {
             try(Connection con = worldDS.getConnection()){
 
                 con.setAutoCommit(false);
-                String sql = "INSERT INTO country(countryName, population) VALUES(?,?)";
+                String query = "INSERT INTO country(countryName, population) VALUES(?,?)";
 
-                PreparedStatement prepStatement = con.prepareStatement(sql);
+                PreparedStatement prepStatement = con.prepareStatement(query);
                 prepStatement.setString(1, name);
                 prepStatement.setInt(2, pop);
                 int rowsAffected = prepStatement.executeUpdate();
@@ -59,7 +59,7 @@ public class WorldService {
 
         }
 
-        // ADD CITY
+        // ADD CITY  (( first we check if the country of that ciry exists , if not it will give you countries that do exist, because you cant add city with no country )
         public void addCity(String country_Name, ArrayList<Country> countryList, WorldService worldService, Scanner scan) {
 
             Scanner scanner = scan;
@@ -147,6 +147,30 @@ public class WorldService {
             return tempList;
         }
 
+    public ArrayList<City> getAllCities() throws SQLException {
+        ArrayList<City> tempList = new ArrayList<>();
+        try (Connection conn = worldDS.getConnection()) {
+            String query = "SELECT city.id, city.name AS cityName, city.population AS cityPopulation, country.countryName\n" +
+                    "FROM city\n" +
+                    "INNER JOIN country ON city.countryId = country.id;\n";
+            PreparedStatement prep = conn.prepareStatement(query);
+            ResultSet resultSet = prep.executeQuery();
+            while (resultSet.next()) {
+                // country.id   means that it is in country table and column id
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("cityName");
+                int pop = resultSet.getInt("cityPopulation");
+                String countryName = resultSet.getString("countryName");
+                City city = new City();
+                city.setName(name);
+                city.setId(id);
+                city.setPopulation(pop);
+                city.setCountryName(countryName);
+                tempList.add(city);
+            }
+        }
+        return tempList;
+    }
 
         // GET CITIES BY COUNTRY NAME
         public ArrayList<City> getCitiesByCountryName(String countryName){
@@ -222,7 +246,6 @@ public class WorldService {
 
 
         // DELETE CITY BY COUNTRY ID
-
         public void deleteCityByCountryId(int id, Connection con) {
 
             try {

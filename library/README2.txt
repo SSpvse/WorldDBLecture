@@ -18,5 +18,5 @@ Absolutely, let's refine the explanation:
    - When a user selects an action, such as adding a city, `Menu` calls the corresponding method in `WorldService`.
    - In Case 7 of the `Menu` class, we see an example where objects (e.g., connection-related objects) are passed to the `addCity` method. This demonstrates how method parameters can be used to provide necessary context or resources for database operations.
 
-5. **myFileReader class is just so you can
+5. **myFileReader class is just so you can use it anywhere in the program,
 By structuring our project in this way, we achieve a clear separation of concerns, making it easier to manage database interactions and user interface functionalities independently. This modular approach enhances readability, maintainability, and scalability of the application.
