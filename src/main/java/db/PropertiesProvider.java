@@ -9,7 +9,7 @@ public class PropertiesProvider {
     public static final Properties PROPS;
 
 
-    // this will execute when the class is loaded in the memory
+    // this will execute when the class is loaded in the memory (before main method even)
     static{
         PROPS = new Properties();
         try {

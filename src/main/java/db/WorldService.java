@@ -16,7 +16,7 @@ public class WorldService {
 
 
         // CONSTRUCTOR
-        //              - that instantly configures the settings for connection to the database, we take that data from PROPS. to get the the data under host/port/db_name/uname/pwd ==>
+        //       - that instantly configures the settings for connection to the database, we take that data from PROPS. to get the the data under host/port/db_name/uname/pwd ==> into the worldDS for our getConnections() in our methods:
         public WorldService() throws SQLException {
             worldDS = new MysqlDataSource();
             worldDS.setServerName(PropertiesProvider.PROPS.getProperty("host"));
@@ -33,6 +33,7 @@ public class WorldService {
         // ADD COUNTRY
 
         public void addCountry(String name, int pop) throws SQLException {
+            // we setup connection through our worldDS
             try(Connection con = worldDS.getConnection()){
 
                 con.setAutoCommit(false);
@@ -107,7 +108,7 @@ public class WorldService {
         public Country getCountryByName(Connection connection, String country_Name) throws SQLException {
 
             Country country = null;
-            connection.setAutoCommit(false);
+
 
             String query = "SELECT * FROM country WHERE countryName=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -156,16 +157,10 @@ public class WorldService {
             if (id < 0) {
                 throw new RuntimeException("Could not find country with name" + countryName);
             }else {
-
                 cityList = getCitiesByCountryId(id);
-
             }
 
-
             return cityList;
-
-
-
         }
 
         // returns Id of Country by name  (this is called first)
@@ -291,6 +286,7 @@ public class WorldService {
                     PreparedStatement preparedStatement = connection.prepareStatement(query);
                     preparedStatement.setInt(1,pop);
                     preparedStatement.setInt(2,country_ID);
+                    // instead of executeQuery
                     preparedStatement.executeUpdate();
 
                     connection.commit();
